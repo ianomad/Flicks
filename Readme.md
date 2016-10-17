@@ -34,8 +34,9 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [X] List anything else that you can get done to improve the app functionality!
-(Instead of using a separate activity I programmatically triggered full screen on youtube player.) 
+* [X] Instead of using a separate activity I programmatically triggered full screen on youtube player.
+* [X] Scroll view in details activity (if it's too much of description)
+* [X] Additional landscape layout for popular movies in main activity to adjust play icon position
 
 ## Video Walkthrough
 
@@ -51,7 +52,7 @@ Describe any challenges encountered while building the app.
 
 ## Open-source libraries used
 
-- [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
+- [OkHttp](http://square.github.io/okhttp/) - Simple HTTP requests 
 - [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
 
 ## License
