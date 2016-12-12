@@ -1,22 +1,17 @@
-/*
- * Copyright (c) 2016.
- * Iliiazbek Akhmedov
- *
- */
-
 package codepath.flicks.api;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
+import org.parceler.Parcel;
 
+@Parcel
 public class Movie {
 
     @SerializedName("poster_path")
-    private String posterPath;
+    String posterPath;
 
     @SerializedName("backdrop_path")
-    private String backdropPath;
+    String backdropPath;
 
     @SerializedName("title")
     String title;
@@ -75,6 +70,10 @@ public class Movie {
         return releaseDate;
     }
 
+    public String getFormattedReleaseDate() {
+        return "Release: " + releaseDate;
+    }
+
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
@@ -101,5 +100,13 @@ public class Movie {
 
     public void setVideo(boolean video) {
         this.video = video;
+    }
+
+    public String getFullBackgropImageURL() {
+        return "https://image.tmdb.org/t/p/w300/" + backdropPath;
+    }
+
+    public String getFullPosterImageURL() {
+        return "https://image.tmdb.org/t/p/w300/" + posterPath;
     }
 }

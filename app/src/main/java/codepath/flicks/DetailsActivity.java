@@ -43,7 +43,6 @@ public class DetailsActivity extends AppCompatActivity {
 
     YouTubePlayerFragment videoFr;
     private String movieId;
-    private boolean video;
     private String backdropImage;
     private YouTubePlayer youTubePlayer;
     private float rating;
@@ -65,7 +64,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         movieId = extras.getString("id");
         backdropImage = extras.getString("backdrop");
-        video = extras.getBoolean("video", false);
         title.setText(extras.getString("title"));
         rating = extras.getFloat("rating");
         ratingBar.setRating(rating);
@@ -108,23 +106,20 @@ public class DetailsActivity extends AppCompatActivity {
         MovieService.getTrailers(movieId, new MovieService.MoviesCallback<Trailer>() {
             @Override
             public void done(final List<Trailer> res) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (res.isEmpty()) {
-                            if (null != videoFr.getView()) {
-                                videoFr.getView().setVisibility(View.GONE);
-                            }
-                            showImage();
-                            return;
+                runOnUiThread(() -> {
+                    if (res.isEmpty()) {
+                        if (null != videoFr.getView()) {
+                            videoFr.getView().setVisibility(View.GONE);
                         }
+                        showImage();
+                        return;
+                    }
 
-                        youTubePlayer.cueVideo(res.get(0).getSource());
+                    youTubePlayer.cueVideo(res.get(0).getSource());
 
-                        if(rating > 5) {
-                            youTubePlayer.play();
-                            youTubePlayer.setFullscreen(true);
-                        }
+                    if (rating > 5) {
+                        youTubePlayer.play();
+                        youTubePlayer.setFullscreen(true);
                     }
                 });
 

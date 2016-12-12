@@ -1,105 +1,110 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2016.  Iliiazbek Akhmedov
-  -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:padding="15dp"
-    tools:background="@color/black">
+    android:layout_margin="5dp">
 
     <RelativeLayout
-        android:id="@+id/imageViewContainer"
-        android:layout_width="350dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="350dp"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/sample_backdrop" />
-
-        <ImageView
-            android:id="@+id/playIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:src="@drawable/play"
-            android:tint="@color/play_color"
-            android:alpha="0.5"
-            android:contentDescription="@string/app_name" />
-
-    </RelativeLayout>
-
-
-
-    <LinearLayout
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        android:layout_toEndOf="@+id/imageViewContainer"
-        android:layout_toRightOf="@+id/imageViewContainer"
-        android:orientation="vertical"
-        android:padding="7dp">
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="15dp">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:ellipsize="end"
-            android:gravity="center_horizontal"
-            android:maxEms="50"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+        <RelativeLayout
+            android:id="@+id/imageViewContainer"
+            android:layout_width="350dp"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/description"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/sample_backdrop" />
+
+            <ImageView
+                android:id="@+id/playIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:alpha="0.5"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/play"
+                android:tint="@color/play_color" />
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:maxEms="80"
-            android:gravity="start"
-            android:text="@string/sample_desc"
-            android:textColor="@color/white70"
-            android:textSize="12sp" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:layout_toEndOf="@+id/imageViewContainer"
+            android:layout_toRightOf="@+id/imageViewContainer"
+            android:orientation="vertical"
+            android:padding="7dp">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxEms="50"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                tools:text="Iron Man" />
 
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxEms="80"
+                android:maxLines="5"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="@string/sample_desc" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/imageViewContainer"
-        android:layout_toRightOf="@+id/imageViewContainer"
-        android:padding="7dp">
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/releaseDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/release_07_07_2016"
-            android:textColor="@color/white70"
-            android:textSize="12sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/imageViewContainer"
+            android:layout_toRightOf="@+id/imageViewContainer"
+            android:padding="3dp">
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@style/RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="3dp"
-            android:layout_below="@id/releaseDate"
-            android:rating="3.5" />
+            <TextView
+                android:id="@+id/releaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/release_07_07_2016"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_below="@id/releaseDate"
+                android:layout_marginTop="7dp"
+                android:rating="3.5" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>
