@@ -52,8 +52,10 @@ Describe any challenges encountered while building the app.
 
 ## Open-source libraries used
 
-- [OkHttp](http://square.github.io/okhttp/) - Simple HTTP requests 
-- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- Glide 
+- Retrofit
+- Dagger 2
+- ButterKnife
 
 ## License
 

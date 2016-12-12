@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
+import com.bumptech.glide.DrawableRequestBuilder;
+import com.bumptech.glide.Glide;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -20,14 +22,14 @@ import codepath.flicks.api.Movie;
 import codepath.flicks.view.holders.PopularMovieViewHolder;
 import codepath.flicks.view.holders.RegularMovieViewHolder;
 import codepath.flicks.view.holders.ViewHolder;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MoviesAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private int VIEW_TYPE_REGULAR = 0;
     private int VIEW_TYPE_POPULAR = 1;
 
-    private List<Movie> movies;
+    private final List<Movie> movies;
 
     public MoviesAdapter(List<Movie> movies) {
         this.movies = movies;
@@ -51,27 +53,26 @@ public class MoviesAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder vh, int pos) {
-
-        Context context = vh.rootView.getContext();
+    public void onBindViewHolder(ViewHolder viewHolder, int pos) {
+        Context context = viewHolder.rootView.getContext();
         Movie movie = movies.get(pos);
 
         if (getItemViewType(pos) == VIEW_TYPE_REGULAR) {
-            RegularMovieViewHolder regularVH = (RegularMovieViewHolder) vh;
+            RegularMovieViewHolder vh = (RegularMovieViewHolder) viewHolder;
 
-            regularVH.title.setText(movie.getTitle());
-            regularVH.desc.setText(movie.getDescription());
-            regularVH.releaseDate.setText(movie.getFormattedReleaseDate());
-            regularVH.ratingBar.setRating(movie.getRating());
+            vh.title.setText(movie.getTitle());
+            vh.desc.setText(movie.getDescription());
+            vh.releaseDate.setText(movie.getFormattedReleaseDate());
+            vh.ratingBar.setRating(movie.getRating());
 
             String imageURL = isLandscape(context) ? movie.getFullBackgropImageURL() : movie.getFullPosterImageURL();
-            fetchRoundedImage(context, regularVH.imageView, imageURL, true);
+            fetchRoundedImage(context, vh.imageView, imageURL, true);
         } else {
-            PopularMovieViewHolder popularViewHolder = (PopularMovieViewHolder) vh;
-            fetchRoundedImage(context, popularViewHolder.imageView, movie.getFullBackgropImageURL(), false);
+            PopularMovieViewHolder vh = (PopularMovieViewHolder) viewHolder;
+            fetchRoundedImage(context, vh.imageView, movie.getFullBackgropImageURL(), false);
         }
 
-        vh.rootView.setOnClickListener(view -> openMovieDetails(context, movie));
+        viewHolder.rootView.setOnClickListener(view -> openMovieDetails(context, movie));
     }
 
     @Override
@@ -84,14 +85,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     private void fetchRoundedImage(Context context, ImageView imageView, String imageURL, boolean round) {
-        RequestCreator requestCreator = Picasso.with(context)
+        DrawableRequestBuilder<String> requestCreator = Glide.with(context)
                 .load(imageURL)
-                .placeholder(R.drawable.placeholder);
+                .placeholder(R.drawable.camera)
+                .fitCenter();
 
         if (round) {
-            RoundedCornersTransformation cornersTransformation =
-                    new RoundedCornersTransformation(5, 0, RoundedCornersTransformation.CornerType.ALL);
-            requestCreator = requestCreator.transform(cornersTransformation);
+            RoundedCornersTransformation cornersTransformation = new RoundedCornersTransformation(context, 5, 0);
+            requestCreator = requestCreator.bitmapTransform(cornersTransformation);
         }
 
         requestCreator.into(imageView);
@@ -99,15 +100,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private void openMovieDetails(Context context, Movie movie) {
         Intent intent = new Intent(context, DetailsActivity.class);
-
-        intent.putExtra("id", movie.getId());
-        intent.putExtra("title", movie.getTitle());
-        intent.putExtra("description", movie.getDescription());
-        intent.putExtra("release_date", movie.getReleaseDate());
-        intent.putExtra("rating", movie.getRating());
-        intent.putExtra("video", movie.isVideo());
-        intent.putExtra("backdrop", movie.getBackdropPath());
-
+        intent.putExtra(DetailsActivity.EXTRA_MOVIE, Parcels.wrap(movie));
         context.startActivity(intent);
     }
 }

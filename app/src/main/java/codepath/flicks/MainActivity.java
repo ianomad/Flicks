@@ -6,16 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import codepath.flicks.adapters.MoviesAdapter;
 import codepath.flicks.api.Movie;
-import codepath.flicks.api.MovieService;
+import codepath.flicks.api.MovieApiClient;
+import codepath.flicks.api.MoviesResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @Inject
+    MovieApiClient movieApiClient;
+
     private List<Movie> movies = new ArrayList<>();
     private MoviesAdapter moviesAdapter;
 
@@ -37,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+        ((FlicksApplication) getApplication()).getAppComponent().inject(this);
 
         setSupportActionBar(toolbar);
 
@@ -59,24 +68,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchMovies() {
-        MovieService.getMovies(new MovieService.MoviesCallback<Movie>() {
+        movieApiClient.getMovies(MovieApiClient.MOVIE_API_KEY, 1).enqueue(new Callback<MoviesResponse>() {
             @Override
-            public void done(final List<Movie> res) {
-                runOnUiThread(() -> {
-                    movies.addAll(res);
-                    moviesAdapter.notifyDataSetChanged();
-                    swipeContainer.setRefreshing(false);
-                });
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                swipeContainer.setRefreshing(false);
+
+                if (!response.isSuccessful()) {
+                    showError();
+                    return;
+                }
+
+                movies.addAll(response.body().getMovies());
+                moviesAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void error(Exception e) {
-                runOnUiThread(() -> {
-                    swipeContainer.setRefreshing(false);
-                    Toast.makeText(MainActivity.this, "Couldn't load data...", Toast.LENGTH_SHORT).show();
-                });
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                swipeContainer.setRefreshing(false);
 
+                showError();
             }
         });
+    }
+
+    private void showError() {
+        //TODO:
     }
 }
