@@ -87,6 +87,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<ViewHolder> {
     private void fetchRoundedImage(Context context, ImageView imageView, String imageURL, boolean round) {
         DrawableRequestBuilder<String> requestCreator = Glide.with(context)
                 .load(imageURL)
+                .fitCenter()
                 .placeholder(R.drawable.camera)
                 .fitCenter();
 
