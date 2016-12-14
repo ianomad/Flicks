@@ -1,11 +1,13 @@
 package codepath.flicks.api;
 
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+
 @Parcel
-public class Movie {
+public class Movie  {
 
     @SerializedName("poster_path")
     String posterPath;
@@ -23,7 +25,7 @@ public class Movie {
     String releaseDate;
 
     @SerializedName("vote_average")
-    Float rating;
+    float rating;
 
     @SerializedName("id")
     String id;
@@ -32,6 +34,17 @@ public class Movie {
     boolean video;
 
     public Movie() {
+    }
+
+    public Movie(String posterPath, String backdropPath, String title, String description, String releaseDate, float rating, String id, boolean video) {
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.title = title;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.id = id;
+        this.video = video;
     }
 
     public String getPosterPath() {
@@ -78,11 +91,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public Float getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

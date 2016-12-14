@@ -15,3 +15,17 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+ # Parceler library
+ -keep interface org.parceler.Parcel
+ -keep @org.parceler.Parcel class * { *; }
+ -keep class **$$Parcelable { *;  }
+
+ # Icepick
+ -dontwarn icepick.**
+ -keep class icepick.** { *; }
+ -keep class **$$Icepick { *; }
+ -keepclasseswithmembernames class * {
+     @icepick.* <fields>;
+ }
+ -keepnames class * { @icepick.State *;}
